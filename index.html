@@ -1279,11 +1279,11 @@ function buildSpellsPanel() {
         <input type="search" id="spell-search" placeholder="Buscar por nome, descrição, dano, efeito..." oninput="renderSpellResults()">
         <select id="spell-level-filter" onchange="renderSpellResults()">
           <option value="">Todos os níveis</option>
-          <optgroup label="Níveis de Magia">
-            ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="nivel-${n}">Nível ${n}</option>`).join('')}
-          </optgroup>
           <optgroup label="Ascensão">
-            ${[1,2,3,4,5,6,7,8,9].map(n => `<option value="ascensao-${n}">Ascensão ${n}</option>`).join('')}
+            ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="nivel-${n}">Ascensão ${n-1}</option>`).join('')}
+          </optgroup>
+          <optgroup label="Ascensão Avançada">
+            ${[1,2,3,4,5,6,7,8,9].map(n => `<option value="ascensao-${n}">Avançada ${n}</option>`).join('')}
           </optgroup>
         </select>
       </div>
@@ -1406,7 +1406,7 @@ function renderSpellCard(s, isKnown, recursoAtual) {
   if (isKnown && !canCast) cardClasses.push('disabled');
 
   const safeKey = key.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  const levelLabel = s.kind === 'ascensao' ? `Asc ${s.nivel}` : `Nv ${s.nivel}`;
+  const levelLabel = s.kind === 'ascensao' ? `Asc ${s.nivel} (avançada)` : `Asc ${s.nivel - 1}`;
   const recursoStr = s.recurso ? ` ${s.recurso}` : '';
 
   let actions = '';
