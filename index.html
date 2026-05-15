@@ -650,7 +650,7 @@
       </div>
       <div>
         <label>Mult. Status</label>
-        <input type="text" id="ascension-mult" readonly value="×1.00 (status)">
+        <input type="text" id="ascension-mult" readonly value="vida ×1.00 / outros ×1.00">
       </div>
     </div>
   </section>
@@ -767,7 +767,18 @@
   <!-- PERÍCIAS -->
   <section class="panel span-2">
     <h2>Perícias</h2>
+    <div class="spell-tabs" style="margin-bottom: 12px;">
+      <div class="spell-tab active" data-skill-tab="all" onclick="switchSkillTab('all')">📜 Todas</div>
+      <div class="spell-tab" data-skill-tab="trained" onclick="switchSkillTab('trained')">⭐ Treinadas <span class="count" id="trained-count">0</span></div>
+    </div>
+    <div class="search-row" style="grid-template-columns: 1fr auto;">
+      <input type="search" id="skill-search" placeholder="Buscar perícia por nome..." oninput="filterSkills()">
+      <button type="button" onclick="clearSkillSearch()" style="padding: 6px 10px; font-size: 0.75em;">Limpar</button>
+    </div>
     <div id="skills-container"></div>
+    <p class="formula-hint" id="skills-empty-msg" style="display:none; text-align:center; padding: 16px;">
+      Nenhuma perícia encontrada.
+    </p>
     <p class="formula-hint">
       Total = atributo + bônus extra (se treinada).
       Marcar perícias treinadas pela raça/classe ou adquiridas com pontos.
@@ -1123,7 +1134,75 @@ function onSkillTrainedChange(checkbox) {
   const row = checkbox.closest('.skill-row');
   if (checkbox.checked) row.classList.add('trained');
   else row.classList.remove('trained');
+  updateTrainedCount();
+  // Re-aplica filtro: se estiver na aba "Treinadas" e a perícia foi destreinada, ela some
+  filterSkills();
   recalcAll();
+}
+
+// =====================================================
+// FILTRO E ABAS DE PERÍCIAS
+// =====================================================
+
+let activeSkillTab = 'all'; // 'all' | 'trained'
+
+function switchSkillTab(tab) {
+  activeSkillTab = tab;
+  document.querySelectorAll('.spell-tab[data-skill-tab]').forEach(t => {
+    t.classList.toggle('active', t.dataset.skillTab === tab);
+  });
+  filterSkills();
+}
+
+function clearSkillSearch() {
+  const el = document.getElementById('skill-search');
+  if (el) el.value = '';
+  filterSkills();
+}
+
+function filterSkills() {
+  const search = (document.getElementById('skill-search')?.value || '').toLowerCase().trim();
+  const onlyTrained = activeSkillTab === 'trained';
+  let totalVisible = 0;
+
+  document.querySelectorAll('.skills-section').forEach(section => {
+    let sectionVisible = 0;
+    section.querySelectorAll('.skill-row').forEach(row => {
+      const skill = (row.dataset.skill || '').toLowerCase();
+      const attr = (row.dataset.attr || '').toLowerCase();
+      const id = skillToId(row.dataset.skill);
+      const trained = !!document.getElementById(id + '-trained')?.checked;
+
+      const matchesSearch = !search || skill.includes(search) || attr.includes(search);
+      const matchesTab = !onlyTrained || trained;
+      const visible = matchesSearch && matchesTab;
+
+      row.style.display = visible ? '' : 'none';
+      if (visible) sectionVisible++;
+    });
+    // Esconde seções que ficaram sem perícias visíveis
+    section.style.display = sectionVisible > 0 ? '' : 'none';
+    totalVisible += sectionVisible;
+  });
+
+  // Mostra mensagem se nada está visível
+  const emptyMsg = document.getElementById('skills-empty-msg');
+  if (emptyMsg) {
+    if (totalVisible === 0) {
+      emptyMsg.style.display = '';
+      emptyMsg.textContent = onlyTrained && !search
+        ? 'Nenhuma perícia treinada ainda. Marque o checkbox de uma perícia para treiná-la.'
+        : 'Nenhuma perícia encontrada com esse filtro.';
+    } else {
+      emptyMsg.style.display = 'none';
+    }
+  }
+}
+
+function updateTrainedCount() {
+  const trainedCount = document.querySelectorAll('.skill-row input[type="checkbox"]:checked').length;
+  const counter = document.getElementById('trained-count');
+  if (counter) counter.textContent = trainedCount;
 }
 
 // =====================================================
@@ -1135,6 +1214,25 @@ function statusMultiplier() {
   return Math.pow(1.2, asc);
 }
 
+// Multiplicador específico de VIDA proporcional ao dano médio das magias.
+// Dano médio extraído do compêndio (mediana das magias com kind='nivel' por ascensão):
+//   Asc 0 = 7   Asc 1 = 14    Asc 2 = 28    Asc 3 = 36    Asc 4 = 55
+//   Asc 5 = 81  Asc 6 = 121   Asc 7 = 165   Asc 8 = 275   Asc 9 = 520
+// Regra de design: personagem de Asc X deve aguentar ≈2 acertos de magia de Asc X.
+// Como vida(asc) cresce na mesma proporção que o dano, a razão vida/dano fica constante
+// em todas as ascensões. Uma classe balanceada cuja vida base no Asc 0 = 14 (=2×7)
+// aguenta exatamente 2 acertos em qualquer ascensão.
+const SPELL_DMG_BY_ASC = [7, 14, 28, 36, 55, 81, 121, 165, 275, 520];
+function vidaAscMultiplier() {
+  const asc = parseInt(document.getElementById('ascension').value) || 0;
+  const a = Math.max(0, Math.min(9, asc));
+  return SPELL_DMG_BY_ASC[a] / SPELL_DMG_BY_ASC[0];
+}
+function spellDmgAtAsc(asc) {
+  const a = Math.max(0, Math.min(9, asc));
+  return SPELL_DMG_BY_ASC[a];
+}
+
 function attrBase(att) {
   const el = document.getElementById(attrToId(att));
   return el ? parseInt(el.value) || 0 : 0;
@@ -1143,7 +1241,9 @@ function attrBase(att) {
 function recalcAll() {
   const asc = parseInt(document.getElementById('ascension').value) || 0;
   const mult = Math.pow(1.2, asc);
-  document.getElementById('ascension-mult').value = '×' + mult.toFixed(2) + ' (status)';
+  const vMult = vidaAscMultiplier();
+  document.getElementById('ascension-mult').value =
+    'vida ×' + vMult.toFixed(2) + ' · outros ×' + mult.toFixed(2);
 
   document.querySelectorAll('.skill-row').forEach(row => {
     const skill = row.dataset.skill;
@@ -1165,8 +1265,10 @@ function updateFormulasHints() {
   const recursoHint = document.getElementById('recurso-formula');
   const recursoLabel = document.getElementById('recurso-label');
   const asc = parseInt(document.getElementById('ascension').value) || 0;
-  const mult = Math.pow(1.2, asc);
+  const mult = Math.pow(1.2, asc); // recurso/sanidade/fome (escala original)
+  const vidaMult = vidaAscMultiplier(); // vida (proporcional ao dano das magias)
   const multStr = asc > 0 ? ` × 1.2<sup>${asc}</sup>` : '';
+  const vidaMultStr = asc > 0 ? ` × ${vidaMult.toFixed(2)}` : '';
 
   if (!data) {
     vidaHint.innerHTML = 'Selecione uma classe. <button onclick="applyVidaFormula()">Aplicar fórmula</button>';
@@ -1177,15 +1279,21 @@ function updateFormulasHints() {
   }
 
   const nivel = parseInt(document.getElementById('level').value) || 1;
-  const nivelBonus = Math.max(0, nivel - 1); // ganho a partir do nível 2
+  const nivelBonus = Math.max(0, nivel - 1);
 
   const vpn = data.vidaPorNivel || 0;
   const vidaLvlPart = vpn * nivelBonus;
   const vidaBaseCalc = data.vidaBase + data.vidaMult * attrBase(data.vidaAttr) + vidaLvlPart;
-  const vidaFinal = Math.floor(vidaBaseCalc * mult);
+  const vidaFinal = Math.floor(vidaBaseCalc * vidaMult);
   const vidaLvlStr = vpn > 0 ? ` + ${vpn} × (Nv−1)` : '';
   const vidaPerNivelTag = vpn > 0 ? ` <span style="color:var(--gold)">(+${vpn}/Nv)</span>` : '';
-  vidaHint.innerHTML = `Fórmula: (${data.vidaBase} + ${data.vidaMult} × ${data.vidaAttr}${vidaLvlStr})${multStr} = <b>${vidaFinal}</b>${vidaPerNivelTag}
+
+  // Quantos acertos de magia de ascensão atual o personagem aguenta
+  const dmgAtAsc = spellDmgAtAsc(asc);
+  const hitsSurvived = (vidaFinal / dmgAtAsc).toFixed(1);
+  const survivalTag = ` <span title="Dano médio de uma magia Asc ${asc} é ${dmgAtAsc}. Você aguenta ~${hitsSurvived} acertos antes de cair." style="color:#9be39b">≈ ${hitsSurvived} acertos Asc ${asc}</span>`;
+
+  vidaHint.innerHTML = `Fórmula: (${data.vidaBase} + ${data.vidaMult} × ${data.vidaAttr}${vidaLvlStr})${vidaMultStr} = <b>${vidaFinal}</b>${vidaPerNivelTag}${survivalTag}
     <button onclick="applyVidaFormula()">Aplicar</button>`;
 
   if (data.recurso && data.recursoBase) {
@@ -1212,7 +1320,7 @@ function applyVidaFormula() {
   const nivelBonus = Math.max(0, nivel - 1);
   const vidaBaseCalc = data.vidaBase + data.vidaMult * attrBase(data.vidaAttr)
                       + (data.vidaPorNivel || 0) * nivelBonus;
-  const vidaFinal = Math.floor(vidaBaseCalc * statusMultiplier());
+  const vidaFinal = Math.floor(vidaBaseCalc * vidaAscMultiplier());
   document.getElementById('vida-max').value = vidaFinal;
   document.getElementById('vida-atual').value = vidaFinal;
   updateBars();
@@ -1577,6 +1685,9 @@ function clearSheet() {
   onRaceChange(); onClassChange();
   recalcAll();
   resetRegenTimer();
+  // Reseta filtro/aba de perícias
+  switchSkillTab('all');
+  updateTrainedCount();
 }
 
 // =====================================================
@@ -1773,6 +1884,10 @@ function loadCharacterData(data) {
   }
   checkRegen(); // aplica imediatamente o que já passou
   updateRegenInfo();
+
+  // 9) Perícias — atualiza contador de treinadas e re-aplica filtro/aba
+  updateTrainedCount();
+  filterSkills();
 }
 
 // =====================================================
