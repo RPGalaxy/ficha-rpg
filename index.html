@@ -580,6 +580,349 @@
     .attributes-grid { grid-template-columns: repeat(2, 1fr); }
     .identity-grid { grid-template-columns: 1fr 1fr; }
   }
+
+  /* === AVATAR === */
+  .avatar-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .avatar-img-wrap {
+    width: 96px; height: 96px;
+    background: var(--bg-input);
+    border: 2px solid var(--border-gold);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .avatar-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .avatar-img-wrap .placeholder {
+    color: var(--text-dim);
+    font-size: 0.75em;
+    text-align: center;
+    padding: 8px;
+  }
+  .avatar-area input[type="text"] { font-size: 0.8em; padding: 4px 6px; }
+
+  /* === COMBATE: defesa / iniciativa / velocidade === */
+  .combat-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .combat-stat-box {
+    background: var(--bg-input);
+    border: 1px solid var(--border-gold);
+    padding: 8px;
+    text-align: center;
+  }
+  .combat-stat-box label {
+    font-size: 0.7em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .combat-stat-box .stat-value {
+    font-family: 'Cinzel', serif;
+    color: var(--gold-bright);
+    font-size: 1.6em;
+    font-weight: bold;
+  }
+  .combat-stat-box input {
+    background: transparent;
+    border: none;
+    color: var(--gold-bright);
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    padding: 0;
+  }
+  .combat-stat-box input:focus { background: rgba(0,0,0,0.3); }
+
+  /* === DICE ROLLER === */
+  .dice-roller-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .dice-roller-row input { padding: 8px 10px; font-family: 'Cinzel', serif; }
+  .dice-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .dice-preset {
+    background: var(--bg-input);
+    border: 1px solid var(--border-gold);
+    color: var(--gold);
+    padding: 3px 8px;
+    font-size: 0.8em;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    user-select: none;
+  }
+  .dice-preset:hover {
+    background: var(--border-gold);
+    color: var(--bg-main);
+  }
+  .dice-log {
+    background: var(--bg-input);
+    border: 1px solid var(--border-gold);
+    max-height: 130px;
+    overflow-y: auto;
+    padding: 6px 8px;
+    font-size: 0.85em;
+    font-family: 'Courier New', monospace;
+  }
+  .dice-log-entry {
+    border-bottom: 1px dotted rgba(139,110,60,0.3);
+    padding: 3px 0;
+    line-height: 1.3;
+  }
+  .dice-log-entry:last-child { border-bottom: none; }
+  .dice-log-entry .total {
+    color: var(--gold-bright);
+    font-weight: bold;
+    font-size: 1.15em;
+    margin-right: 6px;
+  }
+  .dice-log-entry .expr { color: var(--text-dim); }
+  .dice-log-entry .breakdown { color: var(--text-main); font-size: 0.9em; }
+  .dice-log-entry.crit .total { color: #ffd54a; text-shadow: 0 0 6px rgba(255, 213, 74, 0.6); }
+  .dice-log-entry.fail .total { color: #ff6666; }
+
+  /* === QUICK HP ACTIONS === */
+  .quick-actions {
+    display: grid;
+    grid-template-columns: auto 70px auto auto auto;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .quick-actions select, .quick-actions input { padding: 6px; }
+  .quick-actions button.dano { border-color: var(--accent-red); color: #d88; }
+  .quick-actions button.dano:hover { background: var(--accent-red); color: white; }
+  .quick-actions button.cura { border-color: var(--accent-green); color: #9be39b; }
+  .quick-actions button.cura:hover { background: var(--accent-green); color: white; }
+
+  /* === CONDITIONS === */
+  .conditions-area {
+    margin-top: 10px;
+  }
+  .condition-add-row {
+    display: grid;
+    grid-template-columns: 1fr 70px auto;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .condition-add-row input { padding: 6px 8px; }
+  .condition-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 32px;
+  }
+  .condition-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(139,46,46,0.2);
+    border: 1px solid var(--accent-red);
+    padding: 4px 8px;
+    font-size: 0.85em;
+    color: #ffd;
+  }
+  .condition-tag .turn-counter {
+    background: var(--accent-red);
+    color: white;
+    padding: 1px 6px;
+    font-weight: bold;
+    border-radius: 3px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85em;
+  }
+  .condition-tag .turn-counter.permanent { background: var(--border-gold); }
+  .condition-tag .condition-dano {
+    background: rgba(139, 46, 46, 0.4);
+    color: #ffaaaa;
+    padding: 1px 6px;
+    font-weight: bold;
+    border-radius: 3px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78em;
+    border: 1px solid rgba(255, 100, 100, 0.4);
+  }
+  .condition-tag .remove-cond {
+    cursor: pointer;
+    color: #d88;
+    font-weight: bold;
+    padding: 0 3px;
+    user-select: none;
+  }
+  .condition-tag .remove-cond:hover { color: #ff5555; }
+  .condition-empty { color: var(--text-dim); font-style: italic; font-size: 0.85em; padding: 4px; }
+
+  /* === REST BUTTONS === */
+  .rest-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .rest-buttons button.rest-short {
+    border-color: var(--accent-blue);
+    color: #9bd;
+  }
+  .rest-buttons button.rest-short:hover { background: var(--accent-blue); color: white; }
+  .rest-buttons button.rest-long {
+    border-color: var(--gold-bright);
+    color: var(--gold-bright);
+  }
+  .rest-buttons button.rest-long:hover { background: var(--gold-bright); color: var(--bg-main); }
+  .rest-buttons button.next-turn {
+    border-color: var(--accent-red);
+    color: #d88;
+  }
+  .rest-buttons button.next-turn:hover { background: var(--accent-red); color: white; }
+
+  /* === CLICKABLE DICE IN SPELLS === */
+  .rollable-dice {
+    cursor: pointer;
+    text-decoration: underline dotted;
+    color: #ffe086;
+    padding: 1px 3px;
+    border-radius: 2px;
+  }
+  .rollable-dice:hover {
+    background: rgba(255, 224, 134, 0.15);
+    color: var(--gold-bright);
+  }
+
+  /* === SPELL FAVORITE STAR === */
+  .spell-fav-btn {
+    background: transparent;
+    border: 1px solid var(--border-gold);
+    color: var(--text-dim);
+    padding: 2px 8px;
+    font-size: 0.95em;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+  }
+  .spell-fav-btn.active {
+    color: var(--gold-bright);
+    border-color: var(--gold-bright);
+    background: rgba(232,200,115,0.1);
+  }
+  .spell-fav-btn:hover { color: var(--gold); }
+
+  /* === USOS POR DESCANSO === */
+  .usos-tracker {
+    display: inline-flex;
+    gap: 3px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .usos-pip {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    background: transparent;
+    transition: background 0.15s;
+  }
+  .usos-pip.used { background: var(--gold); }
+  .usos-pip:hover { box-shadow: 0 0 4px var(--gold-bright); }
+  .usos-tracker-label {
+    font-size: 0.75em;
+    color: var(--text-dim);
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  /* === ALLIES (companheiros) === */
+  .ally-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ally-card {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--border-gold);
+    border-left: 3px solid var(--gold);
+    padding: 8px 10px;
+    font-size: 0.9em;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+  .ally-card input, .ally-card select {
+    padding: 4px 6px;
+    font-size: 0.9em;
+  }
+  .ally-card .ally-hp-display {
+    color: var(--gold-bright);
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    text-align: center;
+  }
+  .ally-empty {
+    color: var(--text-dim);
+    font-style: italic;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.9em;
+  }
+
+  /* === EXPORT / PRINT BUTTON === */
+  .topbar button.export-pdf {
+    border-color: var(--accent-blue);
+    color: #9bd;
+  }
+  .topbar button.export-pdf:hover { background: var(--accent-blue); color: white; }
+
+  @media print {
+    body {
+      background: white !important;
+      color: black !important;
+      padding: 10px !important;
+      font-size: 11pt;
+    }
+    .topbar, #combate-panel, #spells-panel, .dice-log, .rest-buttons,
+    .quick-actions, .dice-roller-row, .dice-presets, .conditions-area {
+      display: none !important;
+    }
+    .panel {
+      background: white !important;
+      border: 1px solid #888 !important;
+      box-shadow: none !important;
+      page-break-inside: avoid;
+      margin-bottom: 10px;
+    }
+    h1, h2, h3, h4 { color: black !important; }
+    h2 { border-bottom-color: #888 !important; }
+    input, select, textarea {
+      background: white !important;
+      color: black !important;
+      border: 1px solid #aaa !important;
+    }
+    .attribute-box, .status-bar, .skill-row { background: white !important; }
+    .attribute-box input.att-base, .status-bar-text {
+      color: black !important;
+      text-shadow: none !important;
+    }
+    .att-name { color: #444 !important; }
+    button { display: none !important; }
+    label { color: #555 !important; }
+    main { gap: 8px !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -589,6 +932,7 @@
   <div class="actions">
     <button onclick="saveCharacter(event)" title="Baixa um arquivo .json com a ficha completa">💾 Salvar</button>
     <button onclick="document.getElementById('import-file').click()" title="Carrega uma ficha de arquivo .json">📁 Importar</button>
+    <button class="export-pdf" onclick="exportPDF()" title="Imprime ou exporta a ficha como PDF">📄 PDF</button>
     <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importCharacterFromFile(this)">
     <button class="danger" onclick="clearSheet()">🗑 Limpar</button>
   </div>
@@ -599,58 +943,92 @@
   <!-- IDENTIDADE -->
   <section class="panel span-3">
     <h2>Identidade</h2>
-    <div class="identity-grid">
-      <div class="half">
-        <label for="char-name">Nome do Personagem</label>
-        <input type="text" id="char-name" placeholder="Aragorn, Filho de Arathorn">
-      </div>
-      <div class="half">
-        <label for="player-name">Jogador</label>
-        <input type="text" id="player-name">
+    <div style="display: grid; grid-template-columns: 110px 1fr; gap: 16px; align-items: start;">
+
+      <!-- AVATAR -->
+      <div class="avatar-area">
+        <div class="avatar-img-wrap">
+          <img id="avatar-img" alt="" style="display:none">
+          <span class="placeholder" id="avatar-placeholder">Sem retrato</span>
+        </div>
+        <input type="text" id="avatar-url" placeholder="URL da imagem" oninput="updateAvatar()" style="width:100%">
       </div>
 
-      <div>
-        <label for="race">Raça</label>
-        <select id="race" onchange="onRaceChange()">
-          <option value="">—</option>
-        </select>
-      </div>
-      <div>
-        <label for="subrace">Subraça / Linhagem</label>
-        <select id="subrace">
-          <option value="">—</option>
-        </select>
-      </div>
-      <div>
-        <label for="class">Classe</label>
-        <select id="class" onchange="onClassChange()">
-          <option value="">—</option>
-        </select>
-      </div>
-      <div>
-        <label for="subclass">Subclasse</label>
-        <select id="subclass" onchange="onSubclassChange()">
-          <option value="">—</option>
-        </select>
-      </div>
+      <!-- CAMPOS PRINCIPAIS -->
+      <div class="identity-grid">
+        <div class="half">
+          <label for="char-name">Nome do Personagem</label>
+          <input type="text" id="char-name" placeholder="Aragorn, Filho de Arathorn">
+        </div>
+        <div class="half">
+          <label for="player-name">Jogador</label>
+          <input type="text" id="player-name">
+        </div>
 
+        <div>
+          <label for="race">Raça</label>
+          <select id="race" onchange="onRaceChange()">
+            <option value="">—</option>
+          </select>
+        </div>
+        <div>
+          <label for="subrace">Subraça / Linhagem</label>
+          <select id="subrace">
+            <option value="">—</option>
+          </select>
+        </div>
+        <div>
+          <label for="class">Classe</label>
+          <select id="class" onchange="onClassChange()">
+            <option value="">—</option>
+          </select>
+        </div>
+        <div>
+          <label for="subclass">Subclasse</label>
+          <select id="subclass" onchange="onSubclassChange()">
+            <option value="">—</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="path">Caminho / Especialização</label>
+          <select id="path" onchange="onPathChange()">
+            <option value="">—</option>
+          </select>
+        </div>
+        <div>
+          <label for="level">Nível (1-10)</label>
+          <input type="number" id="level" min="1" max="10" value="1" oninput="recalcAll()">
+        </div>
+        <div>
+          <label for="ascension">Ascensão (0-9)</label>
+          <input type="number" id="ascension" min="0" max="9" value="0" oninput="recalcAll()">
+        </div>
+        <div>
+          <label for="xp">XP / Marcos</label>
+          <input type="number" id="xp" min="0" value="0" placeholder="0">
+        </div>
+
+        <div class="full">
+          <label>Mult. Status</label>
+          <input type="text" id="ascension-mult" readonly value="vida ×1.00 / outros ×1.00">
+        </div>
+      </div>
+    </div>
+
+    <!-- Linha extra: idiomas, resistências, imunidades -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 14px;">
       <div>
-        <label for="path">Caminho / Especialização</label>
-        <select id="path" onchange="onPathChange()">
-          <option value="">—</option>
-        </select>
+        <label for="idiomas">Idiomas</label>
+        <input type="text" id="idiomas" placeholder="Comum, Élfico, Anão...">
       </div>
       <div>
-        <label for="level">Nível (1-10)</label>
-        <input type="number" id="level" min="1" max="10" value="1" oninput="recalcAll()">
+        <label for="resistencias">Resistências</label>
+        <input type="text" id="resistencias" placeholder="Fogo, Físico, Veneno...">
       </div>
       <div>
-        <label for="ascension">Ascensão (0-9)</label>
-        <input type="number" id="ascension" min="0" max="9" value="0" oninput="recalcAll()">
-      </div>
-      <div>
-        <label>Mult. Status</label>
-        <input type="text" id="ascension-mult" readonly value="vida ×1.00 / outros ×1.00">
+        <label for="imunidades">Imunidades</label>
+        <input type="text" id="imunidades" placeholder="Medo, Doenças, Charme...">
       </div>
     </div>
 
@@ -663,7 +1041,96 @@
     </div>
   </section>
 
-  <!-- ATRIBUTOS -->
+  <!-- COMBATE -->
+  <section class="panel span-3" id="combate-panel">
+    <h2>Combate</h2>
+
+    <!-- Defesa / Iniciativa / Velocidade / Próximo Turno -->
+    <div class="combat-stats">
+      <div class="combat-stat-box">
+        <label>Defesa</label>
+        <div class="stat-value" id="defesa-value">0</div>
+        <div style="font-size: 0.65em; color: var(--text-dim); margin-top: 2px;">Agi + Res + armadura</div>
+      </div>
+      <div class="combat-stat-box">
+        <label for="iniciativa">Iniciativa</label>
+        <input type="number" id="iniciativa" value="0">
+      </div>
+      <div class="combat-stat-box">
+        <label for="velocidade">Velocidade (m)</label>
+        <input type="number" id="velocidade" value="9">
+      </div>
+      <div class="combat-stat-box">
+        <label for="armadura-bonus">Bônus Armadura</label>
+        <input type="number" id="armadura-bonus" value="0" oninput="recalcDefesa()" title="Some +X de defesa pela armadura equipada">
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+      <!-- COLUNA ESQUERDA: dice roller + quick HP -->
+      <div>
+        <h3>🎲 Rolar Dados</h3>
+        <div class="dice-roller-row">
+          <input type="text" id="dice-input" placeholder="ex: 2d6+3 ou 1d20+5-1d4" onkeypress="if(event.key==='Enter') rollDiceFromInput()">
+          <button onclick="rollDiceFromInput()">Rolar</button>
+        </div>
+        <div class="dice-presets" id="dice-presets">
+          <span class="dice-preset" onclick="rollDice('1d20')">d20</span>
+          <span class="dice-preset" onclick="rollDice('1d4')">d4</span>
+          <span class="dice-preset" onclick="rollDice('1d6')">d6</span>
+          <span class="dice-preset" onclick="rollDice('1d8')">d8</span>
+          <span class="dice-preset" onclick="rollDice('1d10')">d10</span>
+          <span class="dice-preset" onclick="rollDice('1d12')">d12</span>
+          <span class="dice-preset" onclick="rollDice('1d100')">d100</span>
+          <span class="dice-preset" onclick="rollDice('2d20kh1')" title="Vantagem (rola 2d20 e usa o maior)">Vant</span>
+          <span class="dice-preset" onclick="rollDice('2d20kl1')" title="Desvantagem (rola 2d20 e usa o menor)">Desv</span>
+          <span class="dice-preset" onclick="clearDiceLog()" style="border-color: var(--accent-red); color: #d88;">Limpar</span>
+        </div>
+        <div class="dice-log" id="dice-log">
+          <div class="condition-empty">As rolagens aparecem aqui.</div>
+        </div>
+
+        <h3 style="margin-top: 14px;">⚔ Ações Rápidas</h3>
+        <div class="quick-actions">
+          <select id="quick-target">
+            <option value="vida">Vida</option>
+            <option value="recurso">Recurso</option>
+            <option value="sanidade">Sanidade</option>
+            <option value="fome">Fome</option>
+          </select>
+          <input type="text" id="quick-amount" placeholder="10 ou 1d6" value="">
+          <button class="dano" onclick="applyQuickChange('dano')">−</button>
+          <button class="cura" onclick="applyQuickChange('cura')">+</button>
+          <button onclick="undoQuickChange()" title="Desfazer última alteração">↶ Desfazer</button>
+        </div>
+        <p class="formula-hint" style="font-size: 0.75em;">
+          Aceita números (10) ou expressões de dado (1d6+2). Mantém histórico de até 20 alterações.
+        </p>
+      </div>
+
+      <!-- COLUNA DIREITA: condições + descanso -->
+      <div>
+        <h3>🌀 Condições Ativas</h3>
+        <div class="condition-add-row" style="grid-template-columns: 1.4fr 60px 90px auto;">
+          <input type="text" id="condition-name" placeholder="ex: Envenenado" onkeypress="if(event.key==='Enter') addCondition()">
+          <input type="number" id="condition-turns" placeholder="turnos" min="0" title="0 = permanente">
+          <input type="text" id="condition-dano" placeholder="dano/turno" title="Opcional: dano que esta condição causa a cada Próximo Turno. Aceita número (5) ou dado (1d6+2).">
+          <button onclick="addCondition()">Adicionar</button>
+        </div>
+        <div class="condition-list" id="condition-list">
+          <span class="condition-empty">Nenhuma condição ativa.</span>
+        </div>
+
+        <h3 style="margin-top: 14px;">😴 Descanso</h3>
+        <div class="rest-buttons">
+          <button class="next-turn" onclick="nextTurn()" title="Aplica dano das condições, regenera 5% do recurso e decrementa duração das condições ativas.">⏭ Próximo Turno</button>
+          <button class="rest-short" onclick="descansoCurto()" title="Recupera 50% de vida/recurso, reseta usos 'por descanso curto' e 'por combate'">☕ Descanso Curto</button>
+          <button class="rest-long" onclick="descansoLongo()" title="Recupera tudo, reseta todas as usos diárias">🛌 Descanso Longo</button>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="panel">
     <h2>Atributos</h2>
     <div class="attributes-grid" id="attributes-grid"></div>
@@ -801,6 +1268,20 @@
     </div>
   </section>
 
+  <!-- COMPANHEIROS & INVOCAÇÕES -->
+  <section class="panel span-3" id="companheiros-panel">
+    <h2>Companheiros & Invocações</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <p class="formula-hint" style="font-size: 0.85em;">
+        Pets, familiares, criaturas invocadas. Cada um com vida própria e ação rápida.
+      </p>
+      <button onclick="addAlly()">+ Adicionar</button>
+    </div>
+    <div class="ally-list" id="ally-list">
+      <div class="ally-empty">Nenhum companheiro ou invocação ativa.</div>
+    </div>
+  </section>
+
   <!-- HISTÓRIA E NOTAS -->
   <section class="panel span-3">
     <h2>História e Notas</h2>
@@ -855,7 +1336,7 @@ const CLASSES = {
         recurso: 'Mana', recursoBase: 60, recursoMult: 10, recursoAttr: 'Inteligência',
         recursoPorNivel: 10,
         subBuff: _b(0.95, 1.10),
-        passiva: 'Excesso Arcano: cada 1 Mana gasto acima do custo da magia adiciona +1 ao dano. (Máx 2 Mana para dano extra por ascensão)',
+        passiva: 'Excesso Arcano: cada 1 Mana gasto acima do custo da magia adiciona +1 ao dano.',
         caminhos: {
           'Elementalista': _b(1.00, 1.05, 'Sintonia Elemental: ataques contra inimigos do elemento oposto causam +50% de dano.'),
           'Arcanista':     _b(0.95, 1.15, 'Estudo Profundo: identifica magias inimigas conjuradas no seu campo e ganha +2 defesa contra elas por 1 turno.'),
@@ -906,7 +1387,7 @@ const CLASSES = {
         passiva: 'Fúria Crescente: ao ficar abaixo de 50% da vida, ataques causam +1 dado do mesmo tipo.',
         caminhos: {
           'Sangue':     _b(1.05, 1.10, 'Sede de Combate: ao matar um inimigo, recupera 10% da vida máxima.'),
-          'Desgaste':   _b(1.10, 1.10, 'Resistência Brutal: cada turno em combate regenera +1 vida por ataque sofrido naquele turno.'),
+          'Desgaste':   _b(1.10, 1.10, 'Resistência Brutal: cada turno em combate regenera +1 vida por ponto de dano sofrido naquele turno.'),
           'Adrenalina': _b(1.00, 1.20, 'Pulso Acelerado: abaixo de 25% de vida, ganha 1 ação extra por turno.')
         }
       },
@@ -1011,7 +1492,7 @@ const CLASSES = {
         passiva: 'Inspiração Divina: 1× por dia, recupera toda a Fé instantaneamente.',
         caminhos: {
           'Devoto Caótico':     _b(1.00, 1.20, 'Caos da Crença: 1× por sessão, lança magia aleatória do mesmo nível sem gastar Fé (mestre rola).'),
-          'Devoto Leal':        _b(1.05, 1.15, 'Promessa Quebrada: Caso descubra que um inimigo mente em sua frente, ele sofre -2 em todos os testes pela sessão.'),
+          'Devoto Leal':        _b(1.05, 1.15, 'Promessa Quebrada: ao quebrar a palavra do voto, −2 em todos os atributos por 24h.'),
           'Devoto Arrependido': _b(1.10, 1.10, 'Penitência: cada dano sofrido gera +1 de Fé.')
         }
       },
@@ -1336,14 +1817,43 @@ function updatePassivas() {
 
   if (!subPassiva && !camPassiva) {
     display.innerHTML = '<span class="formula-hint" style="font-style:italic;">Selecione uma subclasse e/ou caminho para ver as passivas.</span>';
+    // limpa o cache de info de usos
+    Object.keys(usosInfoCache).forEach(k => delete usosInfoCache[k]);
     return;
   }
+
+  // Detecta usos por descanso/sessão/dia/combate
+  const subUsosInfo = detectUsos(subPassiva);
+  const camUsosInfo = detectUsos(camPassiva);
+  // Cache pra uso em descansoCurto/Longo
+  Object.keys(usosInfoCache).forEach(k => delete usosInfoCache[k]);
+  if (subUsosInfo) usosInfoCache['sub'] = subUsosInfo;
+  if (camUsosInfo) usosInfoCache['cam'] = camUsosInfo;
+
+  // Garante que usosState tenha entradas com o max correto
+  if (subUsosInfo) {
+    if (!usosState['sub'] || usosState['sub'].max !== subUsosInfo.max) {
+      usosState['sub'] = { usados: 0, max: subUsosInfo.max };
+    }
+  } else {
+    delete usosState['sub'];
+  }
+  if (camUsosInfo) {
+    if (!usosState['cam'] || usosState['cam'].max !== camUsosInfo.max) {
+      usosState['cam'] = { usados: 0, max: camUsosInfo.max };
+    }
+  } else {
+    delete usosState['cam'];
+  }
+
   let html = '';
   if (subPassiva) {
-    html += `<div style="margin-bottom: 8px;"><span style="color: var(--gold-bright); font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em;">${subcls || 'Subclasse'}</span> — <span style="color: var(--text-main);">${subPassiva}</span></div>`;
+    const tracker = subUsosInfo ? renderUsosTracker('sub', subUsosInfo) : '';
+    html += `<div style="margin-bottom: 8px;"><span style="color: var(--gold-bright); font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em;">${subcls || 'Subclasse'}</span> — <span style="color: var(--text-main);">${subPassiva}</span>${tracker}</div>`;
   }
   if (camPassiva) {
-    html += `<div><span style="color: #9bd; font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em;">${pathName || 'Caminho'}</span> — <span style="color: var(--text-main);">${camPassiva}</span></div>`;
+    const tracker = camUsosInfo ? renderUsosTracker('cam', camUsosInfo) : '';
+    html += `<div><span style="color: #9bd; font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em;">${pathName || 'Caminho'}</span> — <span style="color: var(--text-main);">${camPassiva}</span>${tracker}</div>`;
   }
   display.innerHTML = html;
 }
@@ -1542,6 +2052,7 @@ function recalcAll() {
 
   updateFormulasHints();
   updateBars();
+  if (typeof recalcDefesa === 'function') recalcDefesa();
 }
 
 function updateFormulasHints() {
@@ -1703,8 +2214,9 @@ function buildSpellsPanel() {
 
   let html = `
     <div class="spell-tabs">
-      <div class="spell-tab active" data-tab="browse" onclick="switchSpellTab('browse')">📜 Buscar Magias</div>
+      <div class="spell-tab active" data-tab="browse" onclick="switchSpellTab('browse')">📜 Buscar</div>
       <div class="spell-tab" data-tab="known" onclick="switchSpellTab('known')">⭐ Conhecidas <span class="count" id="known-count">0</span></div>
+      <div class="spell-tab" data-tab="favorites" onclick="switchSpellTab('favorites')">★ Favoritas <span class="count" id="fav-count">0</span></div>
     </div>
 
     <div id="browse-tab">
@@ -1732,14 +2244,22 @@ function buildSpellsPanel() {
 
     <div id="known-tab" class="hidden">
       <p class="formula-hint" style="margin-bottom:10px;">
-        Clique <b>Usar</b> para conjurar a magia e descontar o custo automaticamente do recurso atual.
+        Clique <b>Usar</b> para conjurar e descontar o custo. Clique nos <span style="color:#ffe086">dados sublinhados</span> para rolar.
       </p>
       <div class="spell-list-area" id="known-spells-list"></div>
+    </div>
+
+    <div id="favorites-tab" class="hidden">
+      <p class="formula-hint" style="margin-bottom:10px;">
+        Suas magias marcadas com ★ ficam aqui — uma quickbar para combate. Marque/desmarque com o botão ★ em cada magia.
+      </p>
+      <div class="spell-list-area" id="favorite-spells-list"></div>
     </div>
   `;
   content.innerHTML = html;
   renderSpellResults();
   renderKnownSpells();
+  renderFavoriteSpells();
 }
 
 function switchSpellTab(tab) {
@@ -1749,7 +2269,9 @@ function switchSpellTab(tab) {
   });
   document.getElementById('browse-tab').classList.toggle('hidden', tab !== 'browse');
   document.getElementById('known-tab').classList.toggle('hidden', tab !== 'known');
+  document.getElementById('favorites-tab').classList.toggle('hidden', tab !== 'favorites');
   if (tab === 'known') renderKnownSpells();
+  if (tab === 'favorites') renderFavoriteSpells();
 }
 
 function setSchoolFilter(school, el) {
@@ -1836,9 +2358,17 @@ function escapeHtml(s) {
           .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+function makeDiceClickable(text) {
+  if (!text) return '';
+  // Substitui expressões como "2d6", "1d8+1d4" por spans clicáveis
+  return escapeHtml(text).replace(/(\d+d\d+(?:\s*[+\-]\s*\d+d\d+)*(?:\s*[+\-]\s*\d+)?)/g,
+    (match) => `<span class="rollable-dice" onclick="rollDice('${match.replace(/\s/g, '')}')" title="Clique para rolar">${match}</span>`);
+}
+
 function renderSpellCard(s, isKnown, recursoAtual) {
   const key = spellKey(s);
   const known = knownSpellIds.has(key);
+  const isFav = favoriteSpellIds.has(key);
   const canCast = recursoAtual >= s.custo;
   const cardClasses = ['spell-card'];
   if (known) cardClasses.push('known');
@@ -1848,26 +2378,31 @@ function renderSpellCard(s, isKnown, recursoAtual) {
   const levelLabel = s.kind === 'ascensao' ? `Asc ${s.nivel} (avançada)` : `Asc ${s.nivel - 1}`;
   const recursoStr = s.recurso ? ` ${s.recurso}` : '';
 
+  // Botão de favorito (sempre visível)
+  const favBtn = `<button class="spell-fav-btn${isFav ? ' active' : ''}" onclick="toggleFavorite('${safeKey}', this)" title="${isFav ? 'Remover dos favoritos' : 'Marcar como favorita'}">${isFav ? '★' : '☆'}</button>`;
+
   let actions = '';
   if (isKnown) {
     actions = `
       <div class="spell-cost" title="${s.custo}${recursoStr}">${s.custo}</div>
       <button class="spell-btn use" onclick="useSpell('${safeKey}', this)" ${canCast ? '' : 'disabled'} title="${canCast ? 'Conjurar magia' : 'Recurso insuficiente'}">⚡ Usar</button>
+      ${favBtn}
       <button class="spell-btn remove" onclick="removeSpell('${safeKey}')">Remover</button>
     `;
   } else {
     actions = `
       <div class="spell-cost" title="${s.custo}${recursoStr}">${s.custo}</div>
       <button class="spell-btn" onclick="addSpell('${safeKey}', this)" ${known ? 'disabled' : ''}>${known ? '✓ Conhecida' : '+ Adicionar'}</button>
+      ${favBtn}
     `;
   }
 
-  // Build effect lines
+  // Build effect lines com dados clicáveis
   let effectLines = '';
-  if (s.dano)   effectLines += `<div class="spell-dmg">⚔ <b>Dano:</b> ${escapeHtml(s.dano)}</div>`;
-  if (s.cura)   effectLines += `<div class="spell-line cura">✚ <b>Cura:</b> ${escapeHtml(s.cura)}</div>`;
-  if (s.efeito) effectLines += `<div class="spell-line efeito">◈ <b>Efeito:</b> ${escapeHtml(s.efeito)}</div>`;
-  if (s.bonus)  effectLines += `<div class="spell-line bonus">★ <b>Bônus:</b> ${escapeHtml(s.bonus)}</div>`;
+  if (s.dano)   effectLines += `<div class="spell-dmg">⚔ <b>Dano:</b> ${makeDiceClickable(s.dano)}</div>`;
+  if (s.cura)   effectLines += `<div class="spell-line cura">✚ <b>Cura:</b> ${makeDiceClickable(s.cura)}</div>`;
+  if (s.efeito) effectLines += `<div class="spell-line efeito">◈ <b>Efeito:</b> ${makeDiceClickable(s.efeito)}</div>`;
+  if (s.bonus)  effectLines += `<div class="spell-line bonus">★ <b>Bônus:</b> ${makeDiceClickable(s.bonus)}</div>`;
 
   return `
     <div class="${cardClasses.join(' ')}" data-spell-key="${safeKey}">
@@ -1972,6 +2507,7 @@ function clearSheet() {
   document.querySelectorAll('input[type="text"], input[type="number"], input[type="search"], textarea').forEach(el => {
     if (el.id === 'level') el.value = 1;
     else if (el.id === 'ascension') el.value = 0;
+    else if (el.id === 'velocidade') el.value = 9;
     else if (el.id.startsWith('att-')) el.value = 1;
     else if (el.id === 'san-atual' || el.id === 'san-max' || el.id === 'fome-atual' || el.id === 'fome-max') el.value = 100;
     else if (el.type === 'number') el.value = 0;
@@ -1983,12 +2519,584 @@ function clearSheet() {
   });
   document.querySelectorAll('select').forEach(s => s.value = '');
   knownSpellIds.clear();
+  favoriteSpellIds.clear();
+  conditions = [];
+  allies = [];
+  Object.keys(usosState).forEach(k => delete usosState[k]);
+  diceLog.length = 0;
+  quickChangeHistory.length = 0;
   onRaceChange(); onClassChange();
   recalcAll();
   resetRegenTimer();
+  updateAvatar();
+  renderConditions();
+  renderAllies();
+  renderDiceLog();
   // Reseta filtro/aba de perícias
   switchSkillTab('all');
   updateTrainedCount();
+}
+
+// =====================================================
+// AVATAR
+// =====================================================
+
+function updateAvatar() {
+  const url = document.getElementById('avatar-url').value.trim();
+  const img = document.getElementById('avatar-img');
+  const placeholder = document.getElementById('avatar-placeholder');
+  if (url) {
+    img.src = url;
+    img.onload = () => { img.style.display = 'block'; placeholder.style.display = 'none'; };
+    img.onerror = () => { img.style.display = 'none'; placeholder.style.display = 'block'; placeholder.textContent = 'Imagem inválida'; };
+  } else {
+    img.style.display = 'none';
+    img.src = '';
+    placeholder.style.display = 'block';
+    placeholder.textContent = 'Sem retrato';
+  }
+}
+
+// =====================================================
+// DEFESA (calculada a partir de atributos + armadura)
+// =====================================================
+
+function recalcDefesa() {
+  // Defesa = Agilidade + Resistência + bônus de armadura
+  const agi = attrBase('Agilidade');
+  const res = attrBase('Resistência');
+  const armBonus = parseInt(document.getElementById('armadura-bonus')?.value) || 0;
+  const defesa = agi + res + armBonus;
+  const el = document.getElementById('defesa-value');
+  if (el) el.textContent = defesa;
+}
+
+// =====================================================
+// ROLADOR DE DADOS
+// =====================================================
+
+const diceLog = []; // últimas rolagens (máx 50)
+
+function rollOne(faces) {
+  return 1 + Math.floor(Math.random() * faces);
+}
+
+function parseDiceExpr(expr) {
+  // Aceita: "2d6", "1d20+3", "2d6+1d4-2", "2d20kh1" (vantagem), "2d20kl1" (desvantagem)
+  const clean = expr.replace(/\s+/g, '').toLowerCase();
+  if (!clean) return null;
+
+  const tokens = [];
+  // Quebra por + ou - mas mantém o sinal
+  let buf = '';
+  for (let i = 0; i < clean.length; i++) {
+    const c = clean[i];
+    if ((c === '+' || c === '-') && buf.length > 0) {
+      tokens.push(buf);
+      buf = c;
+    } else {
+      buf += c;
+    }
+  }
+  if (buf) tokens.push(buf);
+
+  const parts = [];
+  let total = 0;
+  let isCrit = false;
+  let isFail = false;
+
+  for (const tok of tokens) {
+    const sign = tok.startsWith('-') ? -1 : 1;
+    const t = tok.replace(/^[+\-]/, '');
+
+    // Dados com keep highest/lowest: NdMkhX ou NdMklX
+    const khMatch = t.match(/^(\d+)d(\d+)k([hl])(\d+)$/);
+    const diceMatch = t.match(/^(\d+)d(\d+)$/);
+    const flatMatch = t.match(/^(\d+)$/);
+
+    if (khMatch) {
+      const count = parseInt(khMatch[1]);
+      const faces = parseInt(khMatch[2]);
+      const mode = khMatch[3]; // h ou l
+      const keep = parseInt(khMatch[4]);
+      const rolls = Array.from({length: count}, () => rollOne(faces));
+      const sorted = [...rolls].sort((a, b) => mode === 'h' ? b - a : a - b);
+      const kept = sorted.slice(0, keep);
+      const sum = kept.reduce((a, b) => a + b, 0);
+      total += sum * sign;
+      parts.push(`${sign < 0 ? '−' : ''}${count}d${faces}k${mode}${keep}[${rolls.join(',')} → ${kept.join('+')}]=${sum}`);
+      if (faces === 20 && kept.length === 1) {
+        if (kept[0] === 20) isCrit = true;
+        if (kept[0] === 1) isFail = true;
+      }
+    } else if (diceMatch) {
+      const count = parseInt(diceMatch[1]);
+      const faces = parseInt(diceMatch[2]);
+      const rolls = Array.from({length: count}, () => rollOne(faces));
+      const sum = rolls.reduce((a, b) => a + b, 0);
+      total += sum * sign;
+      parts.push(`${sign < 0 ? '−' : ''}${count}d${faces}[${rolls.join(',')}]=${sum}`);
+      if (count === 1 && faces === 20) {
+        if (rolls[0] === 20) isCrit = true;
+        if (rolls[0] === 1) isFail = true;
+      }
+    } else if (flatMatch) {
+      const v = parseInt(flatMatch[1]);
+      total += v * sign;
+      parts.push(`${sign < 0 ? '−' : '+'}${v}`);
+    } else {
+      return null; // expressão inválida
+    }
+  }
+
+  return { total, breakdown: parts.join(' '), isCrit, isFail };
+}
+
+function rollDice(expr) {
+  const result = parseDiceExpr(expr);
+  if (!result) {
+    appendDiceLog({ expr, error: true });
+    return null;
+  }
+  appendDiceLog({ expr, ...result });
+  return result;
+}
+
+function rollDiceFromInput() {
+  const input = document.getElementById('dice-input');
+  const expr = input.value.trim();
+  if (!expr) return;
+  rollDice(expr);
+}
+
+function appendDiceLog(entry) {
+  diceLog.unshift({ ...entry, time: new Date() });
+  if (diceLog.length > 50) diceLog.pop();
+  renderDiceLog();
+}
+
+function renderDiceLog() {
+  const log = document.getElementById('dice-log');
+  if (!log) return;
+  if (diceLog.length === 0) {
+    log.innerHTML = '<div class="condition-empty">As rolagens aparecem aqui.</div>';
+    return;
+  }
+  log.innerHTML = diceLog.slice(0, 20).map(e => {
+    if (e.error) {
+      return `<div class="dice-log-entry fail"><span class="total">!</span><span class="expr">${escapeHtml(e.expr)}</span> — expressão inválida</div>`;
+    }
+    let cls = 'dice-log-entry';
+    if (e.isCrit) cls += ' crit';
+    if (e.isFail) cls += ' fail';
+    const tag = e.isCrit ? ' 🎯' : (e.isFail ? ' 💀' : '');
+    return `<div class="${cls}"><span class="total">${e.total}${tag}</span><span class="expr">${escapeHtml(e.expr)}</span> <span class="breakdown">→ ${escapeHtml(e.breakdown)}</span></div>`;
+  }).join('');
+}
+
+function clearDiceLog() {
+  diceLog.length = 0;
+  renderDiceLog();
+}
+
+// =====================================================
+// AÇÕES RÁPIDAS (dano/cura/desfazer)
+// =====================================================
+
+const quickChangeHistory = []; // pilha: {target, delta}
+
+function applyQuickChange(mode) {
+  const target = document.getElementById('quick-target').value; // vida/recurso/sanidade/fome
+  const amountStr = document.getElementById('quick-amount').value.trim();
+  if (!amountStr) return;
+
+  // Tenta parsear como dado, senão como número plano
+  let amount = 0;
+  const result = parseDiceExpr(amountStr);
+  if (result) {
+    amount = result.total;
+    if (amountStr.includes('d')) {
+      appendDiceLog({ expr: `${amountStr} (${mode})`, ...result });
+    }
+  } else {
+    amount = parseInt(amountStr) || 0;
+  }
+  if (amount <= 0) return;
+
+  const idAtual = target === 'sanidade' ? 'san-atual' : (target === 'fome' ? 'fome-atual' : target + '-atual');
+  const idMax = target === 'sanidade' ? 'san-max' : (target === 'fome' ? 'fome-max' : target + '-max');
+  const atualEl = document.getElementById(idAtual);
+  const maxEl = document.getElementById(idMax);
+  const atual = parseInt(atualEl.value) || 0;
+  const max = parseInt(maxEl.value) || 0;
+
+  let delta = mode === 'dano' ? -amount : amount;
+  // Não passa do max nem fica abaixo de 0
+  let newVal = atual + delta;
+  if (newVal > max) newVal = max;
+  if (newVal < 0) newVal = 0;
+  const actualDelta = newVal - atual;
+
+  if (actualDelta === 0) return;
+
+  atualEl.value = newVal;
+  quickChangeHistory.push({ target, delta: actualDelta });
+  if (quickChangeHistory.length > 20) quickChangeHistory.shift();
+
+  // Floating indicator
+  showFloatingDelta(target, actualDelta);
+  updateBars();
+}
+
+function undoQuickChange() {
+  if (quickChangeHistory.length === 0) return;
+  const last = quickChangeHistory.pop();
+  const idAtual = last.target === 'sanidade' ? 'san-atual' : (last.target === 'fome' ? 'fome-atual' : last.target + '-atual');
+  const el = document.getElementById(idAtual);
+  if (!el) return;
+  el.value = (parseInt(el.value) || 0) - last.delta;
+  showFloatingDelta(last.target, -last.delta, true);
+  updateBars();
+}
+
+function showFloatingDelta(target, delta, isUndo) {
+  const barId = target === 'sanidade' ? 'san-fill' : (target === 'fome' ? 'fome-fill' : target + '-fill');
+  const bar = document.getElementById(barId);
+  if (!bar) return;
+  const row = bar.closest('.status-row');
+  if (!row) return;
+  const float = document.createElement('div');
+  const positive = delta > 0;
+  float.className = 'float-cost ' + (positive ? 'regen' : 'error');
+  float.textContent = (isUndo ? '↶ ' : '') + (positive ? '+' : '') + delta;
+  row.appendChild(float);
+  setTimeout(() => float.remove(), 1000);
+}
+
+// =====================================================
+// CONDIÇÕES ATIVAS
+// =====================================================
+
+let conditions = []; // [{nome, turns}, ...]
+
+function addCondition() {
+  const nameEl = document.getElementById('condition-name');
+  const turnsEl = document.getElementById('condition-turns');
+  const danoEl = document.getElementById('condition-dano');
+  const name = nameEl.value.trim();
+  if (!name) return;
+  const turns = parseInt(turnsEl.value);
+  const dano = (danoEl?.value || '').trim();
+  conditions.push({
+    nome: name,
+    turns: isNaN(turns) ? 0 : turns,
+    dano: dano || null
+  });
+  nameEl.value = '';
+  turnsEl.value = '';
+  if (danoEl) danoEl.value = '';
+  renderConditions();
+}
+
+function removeCondition(idx) {
+  conditions.splice(idx, 1);
+  renderConditions();
+}
+
+function renderConditions() {
+  const list = document.getElementById('condition-list');
+  if (!list) return;
+  if (conditions.length === 0) {
+    list.innerHTML = '<span class="condition-empty">Nenhuma condição ativa.</span>';
+    return;
+  }
+  list.innerHTML = conditions.map((c, i) => {
+    const turnLabel = c.turns > 0
+      ? `<span class="turn-counter">${c.turns}t</span>`
+      : `<span class="turn-counter permanent">∞</span>`;
+    const danoLabel = c.dano
+      ? `<span class="condition-dano" title="Dano aplicado a cada Próximo Turno">⚔ ${escapeHtml(c.dano)}/t</span>`
+      : '';
+    return `<span class="condition-tag">${escapeHtml(c.nome)} ${danoLabel} ${turnLabel} <span class="remove-cond" onclick="removeCondition(${i})" title="Remover">✕</span></span>`;
+  }).join('');
+}
+
+function nextTurn() {
+  const events = [];
+
+  // 1) Aplica dano das condições com `dano`
+  let totalDmg = 0;
+  const dmgDetails = [];
+  conditions.forEach(c => {
+    if (!c.dano) return;
+    const r = parseDiceExpr(c.dano);
+    if (r && r.total > 0) {
+      totalDmg += r.total;
+      // Mostra a fórmula completa só se for dado, senão mostra o valor direto
+      const detail = c.dano.includes('d')
+        ? `${c.nome} (${c.dano} → ${r.total})`
+        : `${c.nome} (${r.total})`;
+      dmgDetails.push(detail);
+    }
+  });
+  if (totalDmg > 0) {
+    const atualEl = document.getElementById('vida-atual');
+    const atual = parseInt(atualEl.value) || 0;
+    const newVal = Math.max(0, atual - totalDmg);
+    const actualDmg = atual - newVal;
+    atualEl.value = newVal;
+    quickChangeHistory.push({ target: 'vida', delta: -actualDmg });
+    if (quickChangeHistory.length > 20) quickChangeHistory.shift();
+    showFloatingDelta('vida', -actualDmg);
+    events.push(`☠ ${actualDmg} dano de condições [${dmgDetails.join(', ')}]`);
+  }
+
+  // 2) Regen de 5% do recurso máximo no fim do turno
+  const recAtualEl = document.getElementById('recurso-atual');
+  const recMaxEl = document.getElementById('recurso-max');
+  if (recAtualEl && recMaxEl) {
+    const recMax = parseInt(recMaxEl.value) || 0;
+    const recAtual = parseInt(recAtualEl.value) || 0;
+    if (recMax > 0 && recAtual < recMax) {
+      const regen = Math.max(1, Math.floor(recMax * 0.05)); // mínimo 1 quando aplicável
+      const newRec = Math.min(recMax, recAtual + regen);
+      const actualRegen = newRec - recAtual;
+      if (actualRegen > 0) {
+        recAtualEl.value = newRec;
+        showFloatingDelta('recurso', actualRegen);
+        const data = getActiveClassData();
+        const nomeRecurso = data?.recurso || 'recurso';
+        events.push(`⟳ +${actualRegen} ${nomeRecurso} (5% do máx)`);
+      }
+    }
+  }
+
+  // 3) Decrementa duração das condições
+  conditions = conditions.map(c => {
+    if (c.turns > 0) return { ...c, turns: c.turns - 1, _justExpired: c.turns - 1 === 0 };
+    return c;
+  });
+  const expired = conditions.filter(c => c._justExpired);
+  conditions = conditions.filter(c => !c._justExpired);
+  if (expired.length > 0) {
+    events.push(`✗ expirou: ${expired.map(c => c.nome).join(', ')}`);
+  }
+
+  renderConditions();
+  updateBars();
+  appendDiceLog({
+    expr: '⏭ próximo turno',
+    total: '✓',
+    breakdown: events.length ? events.join(' · ') : 'sem efeitos automáticos',
+    isCrit: false
+  });
+}
+
+// =====================================================
+// USOS POR DESCANSO (parseado de passivas)
+// =====================================================
+
+const usosState = {}; // key "sub" | "cam" → {usados: 0, max, periodo}
+
+function detectUsos(passivaText) {
+  if (!passivaText) return null;
+  const txt = passivaText.toLowerCase();
+  // Detecta "Nx por <período>"
+  const patterns = [
+    { re: /(\d+)\s*[x×]?\s+por\s+descanso\s+longo/, periodo: 'longo' },
+    { re: /(\d+)\s*[x×]?\s+por\s+descanso\s+curto/, periodo: 'curto' },
+    { re: /(\d+)\s*[x×]?\s+por\s+sessão/, periodo: 'sessao' },
+    { re: /(\d+)\s*[x×]?\s+por\s+dia/, periodo: 'dia' },
+    { re: /(\d+)\s*[x×]?\s+por\s+combate/, periodo: 'combate' }
+  ];
+  for (const p of patterns) {
+    const m = txt.match(p.re);
+    if (m) return { max: parseInt(m[1]), periodo: p.periodo };
+  }
+  return null;
+}
+
+function renderUsosTracker(stateKey, usoInfo) {
+  if (!usoInfo) return '';
+  const state = usosState[stateKey] || { usados: 0, max: usoInfo.max };
+  usosState[stateKey] = state;
+  let pips = '';
+  for (let i = 0; i < usoInfo.max; i++) {
+    const used = i < state.usados;
+    pips += `<span class="usos-pip${used ? ' used' : ''}" onclick="toggleUso('${stateKey}', ${i})" title="${used ? 'Já usado — clique pra reverter' : 'Clique para marcar como usado'}"></span>`;
+  }
+  const labels = { longo: '/descanso longo', curto: '/descanso curto', sessao: '/sessão', dia: '/dia', combate: '/combate' };
+  return `<span class="usos-tracker">${pips}<span class="usos-tracker-label">${labels[usoInfo.periodo] || ''}</span></span>`;
+}
+
+function toggleUso(stateKey, idx) {
+  const state = usosState[stateKey];
+  if (!state) return;
+  // Se está usado, des-usa. Se não usado, usa.
+  if (idx < state.usados) {
+    state.usados = idx; // remove o último uso até esse índice
+  } else {
+    state.usados = idx + 1;
+  }
+  updatePassivas();
+}
+
+// =====================================================
+// DESCANSO
+// =====================================================
+
+function descansoCurto() {
+  if (!confirm('Descanso curto: recupera 50% de vida/recurso e reseta usos "por descanso curto" e "por combate". Continuar?')) return;
+  // Vida: +50% do max
+  ['vida', 'recurso'].forEach(s => {
+    const atualEl = document.getElementById(s + '-atual');
+    const maxEl = document.getElementById(s + '-max');
+    const max = parseInt(maxEl.value) || 0;
+    const atual = parseInt(atualEl.value) || 0;
+    const recovery = Math.floor(max * 0.5);
+    atualEl.value = Math.min(max, atual + recovery);
+  });
+  // Reset usos curto/combate
+  Object.keys(usosState).forEach(k => {
+    const stateInfo = usosInfoCache[k];
+    if (stateInfo && (stateInfo.periodo === 'curto' || stateInfo.periodo === 'combate')) {
+      usosState[k].usados = 0;
+    }
+  });
+  updateBars();
+  updatePassivas();
+  appendDiceLog({ expr: '☕ descanso curto', total: '✓', breakdown: 'vida e recurso +50% / usos resetadas', isCrit: false });
+}
+
+function descansoLongo() {
+  if (!confirm('Descanso longo: recupera vida, recurso, sanidade e fome ao máximo; reseta TODAS as usos diárias. Continuar?')) return;
+  ['vida', 'recurso'].forEach(s => {
+    const max = parseInt(document.getElementById(s + '-max').value) || 0;
+    document.getElementById(s + '-atual').value = max;
+  });
+  ['san', 'fome'].forEach(s => {
+    const max = parseInt(document.getElementById(s + '-max').value) || 0;
+    document.getElementById(s + '-atual').value = max;
+  });
+  // Reset todos usos
+  Object.keys(usosState).forEach(k => usosState[k].usados = 0);
+  // Reset regen timer
+  if (typeof resetRegenTimer === 'function') resetRegenTimer();
+  updateBars();
+  updatePassivas();
+  appendDiceLog({ expr: '🛌 descanso longo', total: '✓', breakdown: 'tudo restaurado', isCrit: false });
+}
+
+// Cache de info de uso por chave (preenchido em updatePassivas)
+const usosInfoCache = {};
+
+// =====================================================
+// COMPANHEIROS & INVOCAÇÕES
+// =====================================================
+
+let allies = []; // [{nome, vida, vidaMax, dano, notas}]
+
+function addAlly() {
+  allies.push({ nome: 'Companheiro', vida: 10, vidaMax: 10, dano: '1d6', notas: '' });
+  renderAllies();
+}
+
+function removeAlly(idx) {
+  allies.splice(idx, 1);
+  renderAllies();
+}
+
+function updateAlly(idx, field, value) {
+  if (!allies[idx]) return;
+  if (field === 'vida' || field === 'vidaMax') {
+    allies[idx][field] = parseInt(value) || 0;
+  } else {
+    allies[idx][field] = value;
+  }
+}
+
+function renderAllies() {
+  const list = document.getElementById('ally-list');
+  if (!list) return;
+  if (allies.length === 0) {
+    list.innerHTML = '<div class="ally-empty">Nenhum companheiro ou invocação ativa.</div>';
+    return;
+  }
+  list.innerHTML = allies.map((a, i) => `
+    <div class="ally-card">
+      <input type="text" value="${escapeHtml(a.nome)}" placeholder="Nome" onchange="updateAlly(${i}, 'nome', this.value)">
+      <div>
+        <label style="font-size:0.7em">Vida</label>
+        <div style="display:flex; gap:2px; align-items:center;">
+          <input type="number" value="${a.vida}" onchange="updateAlly(${i}, 'vida', this.value)" style="width:50px">
+          <span style="color:var(--text-dim)">/</span>
+          <input type="number" value="${a.vidaMax}" onchange="updateAlly(${i}, 'vidaMax', this.value)" style="width:50px">
+        </div>
+      </div>
+      <div>
+        <label style="font-size:0.7em">Dano</label>
+        <input type="text" value="${escapeHtml(a.dano)}" placeholder="1d6" onchange="updateAlly(${i}, 'dano', this.value)">
+      </div>
+      <div>
+        <label style="font-size:0.7em">Notas</label>
+        <input type="text" value="${escapeHtml(a.notas)}" placeholder="..." onchange="updateAlly(${i}, 'notas', this.value)">
+      </div>
+      <button class="spell-btn remove" onclick="removeAlly(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+// =====================================================
+// MAGIAS FAVORITAS
+// =====================================================
+
+const favoriteSpellIds = new Set();
+
+function toggleFavorite(key, btn) {
+  if (favoriteSpellIds.has(key)) {
+    favoriteSpellIds.delete(key);
+    if (btn) { btn.textContent = '☆'; btn.classList.remove('active'); btn.title = 'Marcar como favorita'; }
+  } else {
+    favoriteSpellIds.add(key);
+    if (btn) { btn.textContent = '★'; btn.classList.add('active'); btn.title = 'Remover dos favoritos'; }
+  }
+  const counter = document.getElementById('fav-count');
+  if (counter) counter.textContent = favoriteSpellIds.size;
+  // Atualiza aba de favoritas se estiver visível
+  if (document.getElementById('favorites-tab') && !document.getElementById('favorites-tab').classList.contains('hidden')) {
+    renderFavoriteSpells();
+  }
+}
+
+function renderFavoriteSpells() {
+  const list = document.getElementById('favorite-spells-list');
+  const counter = document.getElementById('fav-count');
+  if (!list) return;
+  const favs = MAGIAS.filter(m => favoriteSpellIds.has(spellKey(m)))
+    .sort((a, b) => {
+      if (a.kind !== b.kind) return a.kind === 'nivel' ? -1 : 1;
+      if (a.nivel !== b.nivel) return a.nivel - b.nivel;
+      return a.nome.localeCompare(b.nome);
+    });
+  if (counter) counter.textContent = favs.length;
+  if (favs.length === 0) {
+    list.innerHTML = '<div class="spell-empty">Nenhuma magia favorita ainda. Clique no ☆ em qualquer magia para adicioná-la aqui.</div>';
+    return;
+  }
+  const recursoAtual = parseInt(document.getElementById('recurso-atual').value) || 0;
+  // Renderiza como "known" se está em knownSpellIds, senão como browse
+  list.innerHTML = favs.map(s => {
+    const isKnown = knownSpellIds.has(spellKey(s));
+    return renderSpellCard(s, isKnown, recursoAtual);
+  }).join('');
+}
+
+// =====================================================
+// EXPORTAR PDF (via print)
+// =====================================================
+
+function exportPDF() {
+  window.print();
 }
 
 // =====================================================
@@ -2024,7 +3132,12 @@ function collectCharacterData() {
       charName: get('char-name'), playerName: get('player-name'),
       race: get('race'), subrace: get('subrace'),
       class: get('class'), subclass: get('subclass'), path: get('path'),
-      level: num('level'), ascension: num('ascension')
+      level: num('level'), ascension: num('ascension'),
+      xp: num('xp'),
+      avatarUrl: get('avatar-url'),
+      idiomas: get('idiomas'),
+      resistencias: get('resistencias'),
+      imunidades: get('imunidades')
     },
     attributes,
     status: {
@@ -2032,6 +3145,11 @@ function collectCharacterData() {
       recurso:  [num('recurso-atual'), num('recurso-max')],
       sanidade: [num('san-atual'),     num('san-max')],
       fome:     [num('fome-atual'),    num('fome-max')]
+    },
+    combat: {
+      iniciativa: num('iniciativa'),
+      velocidade: num('velocidade'),
+      armaduraBonus: num('armadura-bonus')
     },
     equipment: {
       mainhand:  get('equip-mainhand'),
@@ -2042,6 +3160,10 @@ function collectCharacterData() {
     },
     skills,
     spells: Array.from(knownSpellIds),
+    favoriteSpells: Array.from(favoriteSpellIds),
+    conditions,
+    allies,
+    usosState,
     background: get('background'),
     notes:      get('notes-area')
   };
@@ -2116,6 +3238,19 @@ function loadCharacterData(data) {
 
   set('level',     data.identity.level     ?? 1);
   set('ascension', data.identity.ascension ?? 0);
+  set('xp',        data.identity.xp ?? 0);
+  set('avatar-url', data.identity.avatarUrl || '');
+  set('idiomas',     data.identity.idiomas || '');
+  set('resistencias', data.identity.resistencias || '');
+  set('imunidades',   data.identity.imunidades || '');
+  updateAvatar();
+
+  // 1b) Combate
+  if (data.combat) {
+    set('iniciativa',    data.combat.iniciativa ?? 0);
+    set('velocidade',    data.combat.velocidade ?? 9);
+    set('armadura-bonus', data.combat.armaduraBonus ?? 0);
+  }
 
   // 2) Atributos
   if (data.attributes) {
@@ -2192,6 +3327,25 @@ function loadCharacterData(data) {
 
   // 10) Passivas — re-renderiza com base na nova subclasse/caminho
   updatePassivas();
+
+  // 11) Favoritas, condições, aliados, usos
+  favoriteSpellIds.clear();
+  if (Array.isArray(data.favoriteSpells)) data.favoriteSpells.forEach(k => favoriteSpellIds.add(k));
+  conditions = Array.isArray(data.conditions) ? data.conditions : [];
+  allies = Array.isArray(data.allies) ? data.allies : [];
+  if (data.usosState && typeof data.usosState === 'object') {
+    Object.keys(usosState).forEach(k => delete usosState[k]);
+    Object.entries(data.usosState).forEach(([k, v]) => usosState[k] = v);
+  }
+  renderConditions();
+  renderAllies();
+  if (getActiveCasterType()) {
+    renderFavoriteSpells();
+    const favCounter = document.getElementById('fav-count');
+    if (favCounter) favCounter.textContent = favoriteSpellIds.size;
+  }
+  updatePassivas(); // re-renderiza tracker de usos com os valores restaurados
+  recalcDefesa();
 }
 
 // =====================================================
@@ -2300,6 +3454,10 @@ window.addEventListener('DOMContentLoaded', () => {
   buildAttributes();
   buildSkills();
   recalcAll();
+  recalcDefesa();
+  renderConditions();
+  renderAllies();
+  renderDiceLog();
   lastRegenAt = Date.now();
   startRegenSystem();
 });
